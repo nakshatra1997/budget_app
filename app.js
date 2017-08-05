@@ -24,24 +24,25 @@ var UIController=(function()
           //some thing
           //since we will use the functions of UI controller we need not to create it as private
           //it has to be public so for this we will return object (see the above xample)
-          return
-          {
-                getInput : function()
+          return{
+          
+                  getInput: function()
 	               {
 	               	  // var type=document.querySelector('.add__type').value;//will be either inc or exp
 	               	  // var description=document.querySelector('.add__description').value;
 	               	  // var value=document.querySelector('.add__value').value;
 	               	  //now in this case we have to return three diff values
 	               	  //so for this the best solution is to return an object containing these values
-	               	  return
-		               	  {
-		               	  	  type:document.querySelector('.add__type').value,
-			               	  description:document.querySelector('.add__description').value,
-			               	  value:document.querySelector('.add__value').value
+	               	  
+		               	  var obj={
+		               	  	  type: document.querySelector('.add__type').value,
+			                  description: document.querySelector('.add__description').value,
+			               	  value: document.querySelector('.add__value').value
 		               	  };
+		               	  return obj;
 	               }
 
-          }
+          };
 
 
 
