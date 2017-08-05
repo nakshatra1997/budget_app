@@ -13,10 +13,29 @@ var budgetController=(function()
         // 		return add(b);
         // 	}
         // }
-
-
-
-
+        var Expense=function(id,description,value)
+        {
+           this.id=id;
+           this.description=description;
+           this.value=value;
+        }
+        var Income=function(id,description,value)
+        {
+           this.id=id;
+           this.description=description;
+           this.value=value;
+        }
+        var data={
+        	allItems:{
+        		exp:[],
+        		inc:[]
+        	},
+        	totals:
+        	{
+        		exp:0,
+        		inc:0
+        	}
+        }
 	})();
 //UI CONTROLLER
 var UIController=(function()
@@ -91,7 +110,6 @@ var controller=(function(budgetCtrl,UICtrl)
         		//3.add the new item to user interface
         		//4.calculate the budget
         		//5.need to display the budget on UI
-        	console.log(input);
         };
 
         return
@@ -105,5 +123,5 @@ var controller=(function(budgetCtrl,UICtrl)
         
 	})(budgetController,UIController);
 
-	controller.init();
+controller.init();
 	
