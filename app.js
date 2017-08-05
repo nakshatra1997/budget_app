@@ -68,7 +68,21 @@ var controller=(function(budgetCtrl,UICtrl)
         // 		console.log(z);
         // 	}
         // }
-        var DOM=UICtrl.getDOMstrings();
+        var setupEventListeners= function()
+        {
+	         var DOM=UICtrl.getDOMstrings();
+	         document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem);
+	         document.addEventListener('keypress',function(event)
+	         {
+	             if(event.keyCode===13||event.which===13)//which we have used for older browser coz they dont support
+	             	//keycode property
+	             {
+	             	ctrlAddItem();
+	             }
+
+	         });	
+        };
+     
         var ctrlAddItem=function()
         {
         	//1.get the field inpout data
@@ -77,18 +91,19 @@ var controller=(function(budgetCtrl,UICtrl)
         		//3.add the new item to user interface
         		//4.calculate the budget
         		//5.need to display the budget on UI
-        		console.log(input);
-        }
-        document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem);
+        	console.log(input);
+        };
 
-         document.addEventListener('keypress',function(event)
-         {
-             if(event.keyCode===13||event.which===13)//which we have used for older browser coz they dont support
-             	//keycode property
-             {
-             	ctrlAddItem();
-             }
-
-         })
+        return
+        {
+        	init:function()                      //why this is showing error
+        	{
+        		console.log('app has started');
+                setupEventListeners();
+        	}
+        };
+        
 	})(budgetController,UIController);
+
+	controller.init();
 	
