@@ -24,6 +24,12 @@ var UIController=(function()
           //some thing
           //since we will use the functions of UI controller we need not to create it as private
           //it has to be public so for this we will return object (see the above xample)
+          var DOMstrings={
+          	inputType:'.add__type',
+          	inputDescription:'.add__description',
+          	inputValue:'.add__value',
+          	inputBtn:'.add__btn'
+          };
           return{
           
                   getInput: function()
@@ -35,11 +41,15 @@ var UIController=(function()
 	               	  //so for this the best solution is to return an object containing these values
 	               	  
 		               	  var obj={
-		               	  	  type: document.querySelector('.add__type').value,
-			                  description: document.querySelector('.add__description').value,
-			               	  value: document.querySelector('.add__value').value
+		               	  	  type: document.querySelector(DOMstrings.inputType).value,
+			                  description: document.querySelector(DOMstrings.inputDescription).value,  //error fixed by using obj
+			               	  value: document.querySelector(DOMstrings.inputValue).value
 		               	  };
 		               	  return obj;
+	               },
+	               getDOMstrings:function()
+	               {
+	               	 return DOMstrings;
 	               }
 
           };
@@ -58,6 +68,7 @@ var controller=(function(budgetCtrl,UICtrl)
         // 		console.log(z);
         // 	}
         // }
+        var DOM=UICtrl.getDOMstrings();
         var ctrlAddItem=function()
         {
         	//1.get the field inpout data
@@ -68,7 +79,7 @@ var controller=(function(budgetCtrl,UICtrl)
         		//5.need to display the budget on UI
         		console.log(input);
         }
-        document.querySelector('.add__btn').addEventListener('click',ctrlAddItem);
+        document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem);
 
          document.addEventListener('keypress',function(event)
          {
