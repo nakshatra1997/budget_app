@@ -22,6 +22,26 @@ var budgetController=(function()
 var UIController=(function()
 	{
           //some thing
+          //since we will use the functions of UI controller we need not to create it as private
+          //it has to be public so for this we will return object (see the above xample)
+          return
+          {
+                getInput : function()
+	               {
+	               	  // var type=document.querySelector('.add__type').value;//will be either inc or exp
+	               	  // var description=document.querySelector('.add__description').value;
+	               	  // var value=document.querySelector('.add__value').value;
+	               	  //now in this case we have to return three diff values
+	               	  //so for this the best solution is to return an object containing these values
+	               	  return
+		               	  {
+		               	  	  type:document.querySelector('.add__type').value,
+			               	  description:document.querySelector('.add__description').value,
+			               	  value:document.querySelector('.add__value').value
+		               	  };
+	               }
+
+          }
 
 
 
@@ -39,12 +59,13 @@ var controller=(function(budgetCtrl,UICtrl)
         // }
         var ctrlAddItem=function()
         {
-        	//1.get the field inoout data
+        	//1.get the field inpout data
+        	var input=UICtrl.getInput();
         		//2.add the item to budget controller
         		//3.add the new item to user interface
         		//4.calculate the budget
         		//5.need to display the budget on UI
-        		console.log('fine');
+        		console.log(input);
         }
         document.querySelector('.add__btn').addEventListener('click',ctrlAddItem);
 
