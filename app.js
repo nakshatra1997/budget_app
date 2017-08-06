@@ -35,7 +35,43 @@ var budgetController=(function()
         		exp:0,
         		inc:0
         	}
-        }
+        };
+        //now lets add one public method that allows
+        // other modules to enter new item in data
+        return {
+        	addItem:function(type,des,val)
+        	{
+                var newItem,ID;
+                //ID IS USED TO GIVE EACH ITEM A UNIQUE NUMBER
+                //create new id
+                if(data.allItems[type].length>0)
+                {
+                	ID=data.allItems[type][data.allItems[type].length-1].id+1;
+                }
+                else
+                {
+                	ID=0;
+                }
+                
+                //create new item based on 'inc' or 'exp'
+                if(type==='exp')
+                {
+                	newItem=new Expense(ID,des,val);
+                }
+                else if(type==='inc')
+                {
+                	newItem=new Income(ID,des,val);
+                }
+                //push it into our data structure
+                data.allItems[type].push(newItem);
+                //return the new element
+                return newItem; 
+        	},
+        	testing:function()
+        	{
+        		console.log(data);
+        	}
+        };
 	})();
 //UI CONTROLLER
 var UIController=(function()
@@ -93,8 +129,8 @@ var controller=(function(budgetCtrl,UICtrl)
 	         document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem);
 	         document.addEventListener('keypress',function(event)
 	         {
-	             if(event.keyCode===13||event.which===13)//which we have used for older browser coz they dont support
-	             	//keycode property
+	             if(event.keyCode===13||event.which===13) //which we have used for older browser coz they dont support
+	             	                                      //keycode property
 	             {
 	             	ctrlAddItem();
 	             }
@@ -104,20 +140,23 @@ var controller=(function(budgetCtrl,UICtrl)
      
         var ctrlAddItem=function()
         {
-        	//1.get the field inpout data
-        	var input=UICtrl.getInput();
+	        	var input,newItem;
+	        	//1.get the field input data
+	        	input=UICtrl.getInput();
         		//2.add the item to budget controller
+        		newItem=budgetCtrl.addItem(input.type,input.description,input.value);
         		//3.add the new item to user interface
+        		
         		//4.calculate the budget
         		//5.need to display the budget on UI
         };
 
         return
         {
-        	init:function()                      //why this is showing error
+        	init: function()                      //why this is showing error
         	{
         		console.log('app has started');
-                setupEventListeners();
+               // setupEventListeners();
         	}
         };
         
