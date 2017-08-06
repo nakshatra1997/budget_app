@@ -102,6 +102,12 @@ var UIController=(function()
 		               	  };
 		               	  return obj;
 	               },
+	               addItemList:function(obj,type)
+	               {
+                     //create html string with placeholder text
+                     //replace the placeholder text with some actual data
+                     //insert the html into dom
+	               },
 	               getDOMstrings:function()
 	               {
 	               	 return DOMstrings;
