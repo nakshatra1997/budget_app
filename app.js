@@ -18,13 +18,22 @@ var budgetController=(function()
            this.id=id;
            this.description=description;
            this.value=value;
-        }
+        };
         var Income=function(id,description,value)
         {
            this.id=id;
            this.description=description;
            this.value=value;
-        }
+        };
+        var calculateTotal=function(type)
+        {
+            var sum=0;
+            data.allItems[type].forEach(function(cur)
+            	{
+            		sum=sum+cur.value;
+            	});
+            data.totals[type]=sum;
+        };
         var data={
         	allItems:{
         		exp:[],
@@ -34,7 +43,9 @@ var budgetController=(function()
         	{
         		exp:0,
         		inc:0
-        	}
+        	},
+        	budget:0,
+        	percentage:-1
         };
         //now lets add one public method that allows
         // other modules to enter new item in data
@@ -66,6 +77,37 @@ var budgetController=(function()
                 data.allItems[type].push(newItem);
                 //return the new element
                 return newItem; 
+        	},
+        	calculateBudget:function()
+        	{
+               //calculate total income and expenses
+               calculateTotal('exp');
+               calculateTotal('inc');
+               //calculate the budget:income-expenses
+               data.budget=data.totals.inc-data.totals.exp;
+
+               //calculate the percentage of income that we spent
+               if(data.totals.inc>0)
+               {
+                	data.percentage=Math.round((data.totals.exp/data.totals.inc)*100);
+
+               }
+               else
+               {
+                 	data.percentage=-1;
+               }
+
+        	}, 
+        	getBudget:function()
+        	{
+               
+               var obj1={
+               	  budget:data.budget,
+                  totalInc:data.totals.inc,
+                  totalExp:data.totals.exp,
+                  percentage:data.percentage
+               };
+               return obj1;
         	},
         	testing:function()
         	{
@@ -183,8 +225,11 @@ var controller=(function(budgetCtrl,UICtrl)
         var updateBudget=function()
         {
                 //1.calculate the budget
+                budgetCtrl.calculateBudget();
                 //2. return the budget
+                var budget=budgetCtrl.getBudget();
         		//3.need to display the budget on UI
+        		console.log(budget);
         };
 
         var ctrlAddItem=function()
@@ -210,7 +255,7 @@ var controller=(function(budgetCtrl,UICtrl)
           {
           	console.log('app has started');
           	setupEventListeners();
-          }
+          };
         // return
         // {
         // 	init: function()                      //why this is showing error
