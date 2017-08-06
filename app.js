@@ -133,7 +133,7 @@ var UIController=(function()
 	               clearFields:function()
 	               {
                       var fields,fieldsArr;
-                      fields=document.querySelector(DOMstrings.inputDescription +','+DOMstrings.inputValue);
+                      fields=document.querySelectorAll(DOMstrings.inputDescription +','+DOMstrings.inputValue);
                       //the problem is fields is a list not array
                       //we can not use slice function on list(fields.slice ----it is wrong) it for arrays
                       //what we can do is to use call function (see below)
@@ -192,12 +192,12 @@ var controller=(function(budgetCtrl,UICtrl)
 	        	var input,newItem;
 	        	//1.get the field input data
 	        	input=UICtrl.getInput();
-	        	if(input.description!===""&& !isNaN(input.value)&&input.value>0)
+	        	if(input.description!=="" && !isNaN(input.value) && input.value>0)
 	        	{
 	        	    //2.add the item to budget controller
 	        		newItem=budgetCtrl.addItem(input.type,input.description,input.value);
 	        		//3.add the new item to user interface
-	        		UICtrl.addItemList(newItem,input.value);
+	        		UICtrl.addItemList(newItem,input.type);
 	        		//3* clear the input fields
 	        		UICtrl.clearFields();
 	        		//4.calculate and update budget
@@ -206,17 +206,20 @@ var controller=(function(budgetCtrl,UICtrl)
         		
         		
         };
-
-        return
-        {
-        	init: function()                      //why this is showing error
-        	{
-        		console.log('app has started');
-               // setupEventListeners();
-        	}
-        };
-        
-	})(budgetController,UIController);
-
-controller.init();
+          var init=function()
+          {
+          	console.log('app has started');
+          	setupEventListeners();
+          }
+        // return
+        // {
+        // 	init: function()                      //why this is showing error
+        // 	{
+        // 		console.log('app has started');
+        //        // setupEventListeners();
+        // 	}
+        // };
+        return init;	
+    })(budgetController,UIController);
+    controller();
 	
